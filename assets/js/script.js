@@ -31,7 +31,7 @@ function getWeather (event){
     })
     .then(function(res){
         console.log(res);    
-        //saveHis(res.name)
+        
         var url2 = "https://api.openweathermap.org/data/2.5/onecall?lat="+res.coord.lat + "&lon="+res.coord.lon + "&units=imperial&appid=" + apiKey
 
         fetch(url2)
@@ -39,11 +39,18 @@ function getWeather (event){
             return res.json()
         })
         .then(function(data){
-            
+                  
+
             var output = document.getElementById('output')
             output.innerHTML= "";
             console.log(data)
-            
+
+
+
+            var dateOut = document.createElement('p');
+            dateOut.textContent = data.current.dt*1000;
+            output.appendChild(dateOut);
+
             var btn = document.createElement("h1");   
             btn.textContent = "City " + res.name;                 
             output.appendChild(btn);
@@ -69,10 +76,6 @@ function getWeather (event){
             var output1 = document.getElementById('out1')
             output1.innerHTML = "";
 
-            // var btn = document.createElement("h1");
-            // btn.textContent = "5 Day forcast "
-            // output1.appendChild(btn);
-            //the next day [1]
             var btn = document.createElement("p");
             btn.textContent = "Temp: " + data.daily[1].temp.max;
             output1.appendChild(btn);
@@ -179,6 +182,6 @@ function getWeather (event){
     })
 }
 document.getElementById('user-form').addEventListener('submit',getWeather);
-
+//saveHis(res.name)
 displayHistory()
 
